@@ -11,3 +11,19 @@ sections.forEach((section) => {
     navigationFragment.appendChild(anchor);
 })
 navigationBar.appendChild(navigationFragment);
+
+const baseURL = "api.openweathermap.org/data/2.5/weather?zip=";
+const apiKey = "&appid=5c0b432177045e7711375fd8ddaf789c";
+const zip = "00400";
+
+const getWeatherByZip = async (baseURL, zip, apiKey) => {
+    const response = await fetch(baseURL + zip + apiKey)
+    try {
+        const data = await response.json();
+        console.log(data);
+    }
+    catch (error) {
+        console.log("error", error)
+    }
+}
+getWeatherByZip()
