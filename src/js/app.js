@@ -12,10 +12,12 @@ sections.forEach((section) => {
 })
 navigationBar.appendChild(navigationFragment);
 
-const baseURL = "api.openweathermap.org/data/2.5/weather?zip=";
+const baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "&appid=5c0b432177045e7711375fd8ddaf789c";
-const zip = "00400";
-
+//if no country code > default to USA
+const zip = "00400,fi";
+const URL = baseURL + zip + apiKey
+console.log(URL)
 const getWeatherByZip = async (baseURL, zip, apiKey) => {
     const response = await fetch(baseURL + zip + apiKey)
     try {
