@@ -30,7 +30,7 @@ a:active {
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 1fr;
-    grid-template-rows: 300px 150px 500px 500px 500px 50px;
+    grid-template-rows: 300px 200px 500px 500px 500px 50px;
     grid-template-areas: 
     "ban"
     "nav"
@@ -64,7 +64,7 @@ a:active {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 150px;
+    padding-bottom: 50px;
 }
 .weather{
     grid-area: wea;
