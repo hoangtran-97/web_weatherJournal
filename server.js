@@ -12,7 +12,16 @@ app.use(cors());
 
 const port = 3000
 const listening = () => {
-    console.log(port)
+    console.log(`running on localhost: ${port}`);
 }
 const server = app.listen(port, listening)
+//Test
+const data = [];
 
+app.post('/test', addObject);
+
+function addObject(req, res) {
+    data.push(req.body);
+    res.send("POST received")
+    console.log(data)
+};
