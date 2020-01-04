@@ -62,7 +62,7 @@ const postData = async (url = "", data = {}) => {
         console.log("error", error);
     }
 }
-//postData('/test', { animal: 'lion' })
+
 const getData = async (url = "") => {
     const response = await fetch(url, {
         method: "GET",
@@ -86,22 +86,9 @@ const updateUI = async () => {
         const { weather, main, name } = projectData
         const lottiePlayer = document.getElementById("lottie-player");
         console.log("projectData", projectData)
-        console.log(weather, main, name)
         document.getElementById('city').innerHTML = name;
         document.getElementById('city-temp').innerHTML = `${main.temp}&#176 C`;
         document.getElementById('city-description').innerHTML = weather[0].description;
-
-
-        // const cityWeather = document.getElementById("city-weather");
-        // const cityWeatherFragment = document.createDocumentFragment();
-        // const temp = document.createElement("p");
-        // const description = document.createElement("p")
-        // description.id = "description"
-        // temp.innerHTML = `${main.temp}&#176 C`;
-        // description.innerHTML = weather[0].description;
-        // cityWeatherFragment.appendChild(temp)
-        // cityWeatherFragment.appendChild(description)
-        // cityWeather.appendChild(cityWeatherFragment)
         switch (weather[0].main) {
             case "Thunderstorm":
                 lottiePlayer.load(lottie.thunderstorm)

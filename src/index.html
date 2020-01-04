@@ -35,17 +35,18 @@
 
             <label for="zip">Enter Zip code (The
                 default country code is US)</label>
-            <div class="input-container">
+            <div class="weather-input-container">
                 <input type="text" id="country" maxlength="2" placeholder="enter country code">
-                <input type="number" id="zip" placeholder="enter zip code here">
-                <button id="check-weather" type="submit"> Check </button>
+                <input type="text" id="zip" placeholder="enter zip code here">
+                <button id="check-weather" type="submit" class="button"> Check </button>
             </div>
         </div>
         <div class="section entry" id="new entry">
+            <h3>New Journal Entry</h3>
             <label for="feelings">How are you feeling today?</label>
-            <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="9"
-                cols="50"></textarea>
-            <button id="generate" type="submit"> Generate </button>
+            <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="15"
+                cols="30"></textarea>
+            <button id="generate" type="submit" class="button"> Add Entry </button>
         </div>
         <div class="section history" id="history">
             <div id="entryHolder">

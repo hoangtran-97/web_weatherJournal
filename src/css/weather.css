@@ -1,0 +1,15 @@
+
+#city-description {
+    text-transform: capitalize;
+}
+.weather-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+@media(min-width:900px) {
+    .weather-input-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
