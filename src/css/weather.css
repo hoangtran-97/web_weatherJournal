@@ -1,15 +1,21 @@
-
-#city-description {
-    text-transform: capitalize;
-}
 .weather-input-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
-@media(min-width:900px) {
+#country, #zip {
+    margin-bottom: 10px;
+}
+#city-description {
+    text-transform: capitalize;
+}
+@media(min-width:1300px) {
     .weather-input-container {
         flex-direction: row;
         justify-content: space-between;
     }
-}
+    #country, #zip {
+        margin-bottom: 0px;
+    }
+}   

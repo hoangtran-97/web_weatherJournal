@@ -1,4 +1,4 @@
-projectData = {};
+const projectData = {};
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -15,26 +15,23 @@ const listening = () => {
     console.log(`running on localhost: ${port}`);
 }
 const server = app.listen(port, listening)
-//Test
-// const data = [];
 
-// app.post('/test', addObject);
-
-// function addObject(req, res) {
-//     data.push(req.body);
-//     res.send("POST received")
-//     console.log(data)
-// };
+const entries = []
 
 app.get("/all", sendData);
+app.post("/weather", postWeather)
+app.post("/entry", postEntry)
 
 function sendData(request, response) {
     response.send(projectData);
 };
 
-app.post("/weather", postWeather)
-
 function postWeather(request, response) {
-    projectData = request.body
+    projectData["currentWeather"] = request.body
+}
+
+function postEntry(request, response) {
+    entries.push(request.body)
+    projectData["entries"] = entries
     console.log(projectData)
 }

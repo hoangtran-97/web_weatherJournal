@@ -13,6 +13,9 @@ const lottie = {
     clear: "https://assets8.lottiefiles.com/temp/lf20_Stdaec.json",
     clouds: "https://assets2.lottiefiles.com/temp/lf20_VAmWRg.json"
 }
+
+document.getElementById("check-weather").addEventListener("click", () => getWeatherByZip());
+document.getElementById("generate").addEventListener("click", () => saveNewEntry());
 //Nav bar
 sections.forEach((section) => {
     const anchor = document.createElement("a");
@@ -40,12 +43,40 @@ const getWeatherByZip = async () => {
     catch (error) {
         console.log("error", error)
     }
-    postData("/weather", weatherInfo).then(
-        updateUI()
-    )
-
+    weatherInfo.cod == 200 ?
+        postData("/weather", weatherInfo).then(
+            updateUI()
+        ) :
+        alert("city not found")
 }
-document.getElementById("check-weather").addEventListener("click", () => getWeatherByZip());
+
+const saveNewEntry = async () => {
+    const zipcode = document.getElementById("zip").value;
+    if (!zipcode) {
+        alert("Please get the weather info first")
+        return
+    }
+    const entry = document.getElementById("feelings").value;
+    const weather = document.getElementById("status-weather").innerHTML;
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+    const dateTime = `${day}/${month}/${year} - ${hour}:${minute}`;
+    const newEntry = {};
+    newEntry.dateTime = dateTime;
+    newEntry.entry = entry;
+    newEntry.weather = weather;
+    document.getElementById("feelings").value = "";
+    //entry.value = "";
+    //i dont know why entry.value = "" does not work 
+    postData("/entry", newEntry).then(
+        updateUI()
+    );
+}
+
 const postData = async (url = "", data = {}) => {
     const response = await fetch(url, {
         method: "POST",
@@ -83,39 +114,48 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const projectData = await request.json();
-        const { weather, main, name } = projectData
-        const lottiePlayer = document.getElementById("lottie-player");
-        console.log("projectData", projectData)
-        document.getElementById('city').innerHTML = name;
-        document.getElementById('city-temp').innerHTML = `${main.temp}&#176 C`;
-        document.getElementById('city-description').innerHTML = weather[0].description;
-        switch (weather[0].main) {
-            case "Thunderstorm":
-                lottiePlayer.load(lottie.thunderstorm)
-                break;
-            case "Drizzle":
-                lottiePlayer.load(lottie.drizzle)
-                break;
-            case "Rain":
-                lottiePlayer.load(lottie.rain)
-                break;
-            case "Snow":
-                lottiePlayer.load(lottie.snow)
-                break;
-            case "Mist":
-                lottiePlayer.load(lottie.mist)
-                break;
-            case "Clear":
-                llottiePlayer.load(lottie.clear)
-                break;
-            case "Clouds":
-                lottiePlayer.load(lottie.clouds)
-                break;
-            default:
-                lottiePlayer.load(lottie.all)
+        if (projectData.currentWeather) {
+            updateUIWeather(projectData)
         }
-        lottiePlayer.setSpeed(1)
     } catch (error) {
         console.log("error", error);
     }
+}
+const updateUIWeather = (projectData) => {
+    const { weather, main, name } = projectData.currentWeather
+    const lottiePlayer = document.getElementById("lottie-player");
+    const statusIcon = document.getElementById("status-icon");
+    statusIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}.png`
+    console.log("projectData", projectData)
+    document.getElementById("city").innerHTML = name;
+    document.getElementById("city-temp").innerHTML = `${main.temp}&#176 C`;
+    document.getElementById("city-description").innerHTML = weather[0].description;
+    document.getElementById("status-weather").innerHTML = `It's ${main.temp}&#176 C, ${weather[0].description}`
+
+    switch (weather[0].main) {
+        case "Thunderstorm":
+            lottiePlayer.load(lottie.thunderstorm)
+            break;
+        case "Drizzle":
+            lottiePlayer.load(lottie.drizzle)
+            break;
+        case "Rain":
+            lottiePlayer.load(lottie.rain)
+            break;
+        case "Snow":
+            lottiePlayer.load(lottie.snow)
+            break;
+        case "Mist":
+            lottiePlayer.load(lottie.mist)
+            break;
+        case "Clear":
+            llottiePlayer.load(lottie.clear)
+            break;
+        case "Clouds":
+            lottiePlayer.load(lottie.clouds)
+            break;
+        default:
+            lottiePlayer.load(lottie.all)
+    }
+    lottiePlayer.setSpeed(1)
 }
