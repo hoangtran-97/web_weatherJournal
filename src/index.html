@@ -8,6 +8,8 @@
     <link href="./css/styles.css" rel="stylesheet">
     <script src="./js/app.js" defer></script>
     <script src="https://kit.fontawesome.com/b7efdea6e4.js" crossorigin="anonymous" defer></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+
     <title>Gleen Weather Journal</title>
 </head>
 
@@ -18,14 +20,26 @@
     <div class="container">
         <div class="section banner">
             <h3>A <em>gleen</em> is a sudden burst of warm sunshine.</h3>
-            <p>So why not savour your <em>gleens</em> here with their accompanying weather.
+            <p>So why not savour your <em>gleens</em> here.
             </p>
         </div>
         <div class="navigation" id="navigation">
         </div>
         <div class="section weather" id="current weather">
-            <label for="zip">Enter Zipcode here</label>
-            <input type="text" id="zip" placeholder="enter zip code here">
+            <h3 id="city">Enter the zip code of your city</h3>
+            <div id="city-temp"></div>
+            <div id="city-description"></div>
+            <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_kd7SIg.json" background="transparent"
+                speed="3" style="width: 200px; height: 200px;" id="lottie-player" loop autoplay>
+            </lottie-player>
+
+            <label for="zip">Enter Zip code (The
+                default country code is US)</label>
+            <div class="input-container">
+                <input type="text" id="country" maxlength="2" placeholder="enter country code">
+                <input type="number" id="zip" placeholder="enter zip code here">
+                <button id="check-weather" type="submit"> Check </button>
+            </div>
         </div>
         <div class="section entry" id="new entry">
             <label for="feelings">How are you feeling today?</label>

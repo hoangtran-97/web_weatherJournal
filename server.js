@@ -16,12 +16,25 @@ const listening = () => {
 }
 const server = app.listen(port, listening)
 //Test
-const data = [];
+// const data = [];
 
-app.post('/test', addObject);
+// app.post('/test', addObject);
 
-function addObject(req, res) {
-    data.push(req.body);
-    res.send("POST received")
-    console.log(data)
+// function addObject(req, res) {
+//     data.push(req.body);
+//     res.send("POST received")
+//     console.log(data)
+// };
+
+app.get("/all", sendData);
+
+function sendData(request, response) {
+    response.send(projectData);
 };
+
+app.post("/weather", postWeather)
+
+function postWeather(request, response) {
+    projectData = request.body
+    console.log(projectData)
+}
