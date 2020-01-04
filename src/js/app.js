@@ -52,12 +52,17 @@ const getWeatherByZip = async () => {
 
 const saveNewEntry = async () => {
     const zipcode = document.getElementById("zip").value;
+    const entry = document.getElementById("feelings").value;
     if (!zipcode) {
         alert("Please get the weather info first")
         return
     }
-    const entry = document.getElementById("feelings").value;
-    const weather = document.getElementById("status-weather").innerHTML;
+    if (!entry) {
+        alert("Please enter your feelings.")
+        return
+    }
+    const weatherString = document.getElementById("status-weather").innerHTML;
+    const weather = weatherString.slice(5)
     const today = new Date();
     const day = today.getDate();
     const month = today.getMonth() + 1;
@@ -114,48 +119,69 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const projectData = await request.json();
-        if (projectData.currentWeather) {
-            updateUIWeather(projectData)
+        const { currentWeather, entries } = projectData
+        const { weather, main, name } = currentWeather
+        const lottiePlayer = document.getElementById("lottie-player");
+        const statusIcon = document.getElementById("status-icon");
+        statusIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}.png`
+        console.log("projectData", projectData)
+        document.getElementById("city").innerHTML = name;
+        document.getElementById("city-temp").innerHTML = `${main.temp}&#176 C`;
+        document.getElementById("city-description").innerHTML = weather[0].description;
+        document.getElementById("status-weather").innerHTML = `It's ${main.temp}&#176 C, ${weather[0].description}`
+
+        switch (weather[0].main) {
+            case "Thunderstorm":
+                lottiePlayer.load(lottie.thunderstorm)
+                break;
+            case "Drizzle":
+                lottiePlayer.load(lottie.drizzle)
+                break;
+            case "Rain":
+                lottiePlayer.load(lottie.rain)
+                break;
+            case "Snow":
+                lottiePlayer.load(lottie.snow)
+                break;
+            case "Mist":
+                lottiePlayer.load(lottie.mist)
+                break;
+            case "Clear":
+                llottiePlayer.load(lottie.clear)
+                break;
+            case "Clouds":
+                lottiePlayer.load(lottie.clouds)
+                break;
+            default:
+                lottiePlayer.load(lottie.all)
+        }
+        lottiePlayer.setSpeed(1)
+        if (entries) {
+            updateUIHistory(entries)
         }
     } catch (error) {
         console.log("error", error);
     }
 }
-const updateUIWeather = (projectData) => {
-    const { weather, main, name } = projectData.currentWeather
-    const lottiePlayer = document.getElementById("lottie-player");
-    const statusIcon = document.getElementById("status-icon");
-    statusIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}.png`
-    console.log("projectData", projectData)
-    document.getElementById("city").innerHTML = name;
-    document.getElementById("city-temp").innerHTML = `${main.temp}&#176 C`;
-    document.getElementById("city-description").innerHTML = weather[0].description;
-    document.getElementById("status-weather").innerHTML = `It's ${main.temp}&#176 C, ${weather[0].description}`
-
-    switch (weather[0].main) {
-        case "Thunderstorm":
-            lottiePlayer.load(lottie.thunderstorm)
-            break;
-        case "Drizzle":
-            lottiePlayer.load(lottie.drizzle)
-            break;
-        case "Rain":
-            lottiePlayer.load(lottie.rain)
-            break;
-        case "Snow":
-            lottiePlayer.load(lottie.snow)
-            break;
-        case "Mist":
-            lottiePlayer.load(lottie.mist)
-            break;
-        case "Clear":
-            llottiePlayer.load(lottie.clear)
-            break;
-        case "Clouds":
-            lottiePlayer.load(lottie.clouds)
-            break;
-        default:
-            lottiePlayer.load(lottie.all)
-    }
-    lottiePlayer.setSpeed(1)
+const updateUIHistory = (entries) => {
+    const history = document.getElementById("history")
+    history.innerHTML = ""
+    const historyFragment = document.createDocumentFragment();
+    entries.forEach((entry) => {
+        const entryBlock = document.createElement("div")
+        const dateTime = document.createElement("p")
+        const entryContent = document.createElement("p")
+        const weatherStatus = document.createElement("p")
+        dateTime.innerHTML = entry.dateTime
+        entryContent.innerHTML = entry.entry
+        weatherStatus.innerHTML = entry.weather
+        entryBlock.appendChild(dateTime)
+        entryBlock.appendChild(weatherStatus)
+        entryBlock.appendChild(entryContent)
+        entryBlock.className = "entry-block"
+        historyFragment.appendChild(entryBlock)
+    })
+    history.appendChild(historyFragment)
 }
+
+updateUI()

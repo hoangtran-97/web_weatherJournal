@@ -82,6 +82,8 @@ a:active {
 }
 .history{
     grid-area: his;
+    overflow: auto;
+    height: 450px;
 }
 .button {
     background-color: #e9e9e9;
@@ -95,7 +97,7 @@ a:active {
         display: grid;
         grid-gap: 20px;
         grid-template-columns: repeat(6, 1fr);
-        grid-template-rows:300px 500px 500px 50px;
+        grid-template-rows:300px 500px 1fr 50px;
         grid-template-areas: 
         "ban ban ban ban ban nav"
         "wea wea ent ent ent nav"
