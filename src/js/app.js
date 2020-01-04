@@ -27,61 +27,6 @@ sections.forEach((section) => {
 })
 navigationBar.appendChild(navigationFragment);
 
-const getWeatherByZip = async () => {
-    const zipcode = document.getElementById("zip").value;
-    const countryCode = document.getElementById("country").value;
-    let weatherInfo = {}
-    if (!zipcode) {
-        alert("Please Enter Zip Code!")
-        return
-    }
-    const URL_GET_ZIP = `${baseURL}${zipcode},${countryCode}&units=metric${apiKey}`
-    const response = await fetch(URL_GET_ZIP)
-    try {
-        weatherInfo = await response.json();
-    }
-    catch (error) {
-        console.log("error", error)
-    }
-    weatherInfo.cod == 200 ?
-        postData("/weather", weatherInfo).then(
-            updateUI()
-        ) :
-        alert("city not found")
-}
-
-const saveNewEntry = async () => {
-    const zipcode = document.getElementById("zip").value;
-    const entry = document.getElementById("feelings").value;
-    if (!zipcode) {
-        alert("Please get the weather info first")
-        return
-    }
-    if (!entry) {
-        alert("Please enter your feelings.")
-        return
-    }
-    const weatherString = document.getElementById("status-weather").innerHTML;
-    const weather = weatherString.slice(5)
-    const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const hour = today.getHours();
-    const minute = today.getMinutes();
-    const dateTime = `${day}/${month}/${year} - ${hour}:${minute}`;
-    const newEntry = {};
-    newEntry.dateTime = dateTime;
-    newEntry.entry = entry;
-    newEntry.weather = weather;
-    document.getElementById("feelings").value = "";
-    //entry.value = "";
-    //i dont know why entry.value = "" does not work 
-    postData("/entry", newEntry).then(
-        updateUI()
-    );
-}
-
 const postData = async (url = "", data = {}) => {
     const response = await fetch(url, {
         method: "POST",
@@ -113,6 +58,61 @@ const getData = async (url = "") => {
     } catch (error) {
         console.log("error", error);
     }
+}
+
+const getWeatherByZip = async () => {
+    const zipcode = document.getElementById("zip").value;
+    const countryCode = document.getElementById("country").value;
+    let weatherInfo = {}
+    if (!zipcode) {
+        alert("Please Enter Zip Code!")
+        return
+    }
+    const URL_GET_ZIP = `${baseURL}${zipcode},${countryCode}&units=metric${apiKey}`
+    const response = await fetch(URL_GET_ZIP)
+    try {
+        weatherInfo = await response.json();
+    }
+    catch (error) {
+        console.log("error", error)
+    }
+    weatherInfo.cod == 200 ?
+        postData("/weather", weatherInfo).then(
+            updateUI()
+        ) :
+        alert("City Not Found!")
+}
+
+const saveNewEntry = async () => {
+    const zipcode = document.getElementById("zip").value;
+    const entry = document.getElementById("feelings").value;
+    if (!zipcode) {
+        alert("Please Get The Weather Info First!")
+        return
+    }
+    if (!entry) {
+        alert("Please Enter Your Feelings!")
+        return
+    }
+    const weatherString = document.getElementById("status-weather").innerHTML;
+    const weather = weatherString.slice(5)
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+    const dateTime = `${day}/${month}/${year} - ${hour}:${minute}`;
+    const newEntry = {};
+    newEntry.dateTime = dateTime;
+    newEntry.entry = entry;
+    newEntry.weather = weather;
+    document.getElementById("feelings").value = "";
+    //entry.value = "";
+    //i dont know why entry.value = "" does not work 
+    postData("/entry", newEntry).then(
+        updateUI()
+    );
 }
 
 const updateUI = async () => {
@@ -164,9 +164,15 @@ const updateUI = async () => {
     }
 }
 const updateUIHistory = (entries) => {
-    const history = document.getElementById("history")
+    const history = document.getElementById("history-list")
     history.innerHTML = ""
     const historyFragment = document.createDocumentFragment();
+    const holderDate = document.getElementById("date")
+    const holderTemp = document.getElementById("temp")
+    const holderContent = document.getElementById("content")
+    holderDate.innerHTML = entries[0].dateTime
+    holderTemp.innerHTML = entries[0].weather
+    holderContent.innerHTML = entries[0].entry
     entries.forEach((entry) => {
         const entryBlock = document.createElement("div")
         const dateTime = document.createElement("p")
@@ -182,6 +188,8 @@ const updateUIHistory = (entries) => {
         historyFragment.appendChild(entryBlock)
     })
     history.appendChild(historyFragment)
-}
 
+
+}
+//fetch projectData if there is any
 updateUI()

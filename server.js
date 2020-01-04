@@ -31,7 +31,7 @@ function postWeather(request, response) {
 }
 
 function postEntry(request, response) {
-    entries.push(request.body)
+    entries.unshift(request.body)
     projectData["entries"] = entries
     console.log(projectData)
 }
