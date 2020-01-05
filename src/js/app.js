@@ -1,18 +1,11 @@
+import lottie from "../constants/lottie.js"
+
 const baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "&appid=5c0b432177045e7711375fd8ddaf789c";
 const sections = document.querySelectorAll(".section")
 const navigationBar = document.getElementById("navigation")
 const navigationFragment = document.createDocumentFragment();
-const lottie = {
-    all: "https://assets8.lottiefiles.com/packages/lf20_kd7SIg.json",
-    thunderstorm: "https://assets8.lottiefiles.com/temp/lf20_Kuot2e.json",
-    drizzle: "https://assets2.lottiefiles.com/packages/lf20_xzgLBZ.json",
-    rain: "https://assets10.lottiefiles.com/temp/lf20_rpC1Rd.json",
-    snow: "https://assets5.lottiefiles.com/temp/lf20_WtPCZs.json",
-    mist: "https://assets5.lottiefiles.com/temp/lf20_kOfPKE.json",
-    clear: "https://assets8.lottiefiles.com/temp/lf20_Stdaec.json",
-    clouds: "https://assets2.lottiefiles.com/temp/lf20_VAmWRg.json"
-}
+
 
 document.getElementById("check-weather").addEventListener("click", () => getWeatherByZip());
 document.getElementById("generate").addEventListener("click", () => saveNewEntry());
@@ -35,22 +28,6 @@ const postData = async (url = "", data = {}) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    });
-    try {
-        const newData = await response.json();
-        return newData
-    } catch (error) {
-        console.log("error", error);
-    }
-}
-
-const getData = async (url = "") => {
-    const response = await fetch(url, {
-        method: "GET",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        }
     });
     try {
         const newData = await response.json();
@@ -108,8 +85,6 @@ const saveNewEntry = async () => {
     newEntry.entry = entry;
     newEntry.weather = weather;
     document.getElementById("feelings").value = "";
-    //entry.value = "";
-    //i dont know why entry.value = "" does not work 
     postData("/entry", newEntry).then(
         updateUI()
     );
