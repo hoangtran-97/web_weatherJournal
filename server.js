@@ -2,6 +2,8 @@ const projectData = {};
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const serverless = require('serverless-http');
+
 
 const app = express();
 
@@ -35,3 +37,4 @@ function postEntry(request, response) {
     projectData["entries"] = entries
     console.log(projectData)
 }
+module.exports.handler = serverless(app);
