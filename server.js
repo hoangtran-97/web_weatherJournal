@@ -10,7 +10,7 @@ app.use(express.static('src'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use('./functions/server.js', router);
+app.use('/.netlify/functions/server', router);
 
 const port = 3000
 const listening = () => {
@@ -38,4 +38,3 @@ function postEntry(request, response) {
     console.log(projectData)
 }
 module.exports = app;
-module.exports.handler = serverless(app);
