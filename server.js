@@ -37,4 +37,4 @@ function postEntry(request, response) {
     projectData["entries"] = entries
     console.log(projectData)
 }
-module.exports = app;
+module.exports.handler = serverless(app)
