@@ -3,14 +3,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const serverless = require('serverless-http');
-
-
 const app = express();
+const router = express.Router();
 
 app.use(express.static('src'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use('/.netlify/functions/server', router);
 
 const port = 3000
 const listening = () => {
@@ -20,9 +20,9 @@ const server = app.listen(port, listening)
 
 const entries = []
 
-app.get("/all", sendData);
-app.post("/weather", postWeather)
-app.post("/entry", postEntry)
+router.get("/all", sendData);
+router.post("/weather", postWeather)
+router.post("/entry", postEntry)
 
 function sendData(request, response) {
     response.send(projectData);
@@ -37,4 +37,5 @@ function postEntry(request, response) {
     projectData["entries"] = entries
     console.log(projectData)
 }
+module.exports = app;
 module.exports.handler = serverless(app);
