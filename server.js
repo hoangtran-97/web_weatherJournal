@@ -25,7 +25,7 @@ router.post("/weather", postWeather)
 router.post("/entry", postEntry)
 
 function sendData(request, response) {
-    response.send(projectData);
+    response.json(projectData);
 };
 
 function postWeather(request, response) {

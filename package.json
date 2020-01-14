@@ -6,7 +6,8 @@
     "scripts": {
         "test": "test",
         "start": "node server.js",
-        "build": "netlify-lambda build ./"
+        "startNet": "./node_modules/.bin/netlify-lambda serve ./",
+        "build": "./node_modules/.bin/netlify-lambda build ./"
     },
     "repository": {
         "type": "git",
