@@ -10,7 +10,7 @@ app.use(express.static('src'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/.netlify/functions/server', router);
+app.use('./functions/server.js', router);
 
 const port = 3000
 const listening = () => {

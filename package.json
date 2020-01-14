@@ -1,26 +1,28 @@
 {
-  "name": "web_weatherjournal",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "test",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hoangtran-97/web_weatherJournal.git"
-  },
-  "author": "Hoang Tran",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hoangtran-97/web_weatherJournal/issues"
-  },
-  "homepage": "https://github.com/hoangtran-97/web_weatherJournal#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "serverless-http": "^2.3.0"
-  }
+    "name": "web_weatherjournal",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "test",
+        "start": "node server.js",
+        "build": "netlify-lambda build ./"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hoangtran-97/web_weatherJournal.git"
+    },
+    "author": "Hoang Tran",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/hoangtran-97/web_weatherJournal/issues"
+    },
+    "homepage": "https://github.com/hoangtran-97/web_weatherJournal#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "netlify-lambda": "^1.6.3",
+        "serverless-http": "^2.3.0"
+    }
 }
