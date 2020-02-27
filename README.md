@@ -1,5 +1,8 @@
 # Gleen Weather Journal
 A Journal with saves your journal entries with that day weather info based on Zip Code.
+
+[Live version](https://hoangtranxamk-weather-journal.herokuapp.com/) - Deployed on Herokku.
+
 ## Getting started
 Clone this repo and checkout at branch "develop":
 ```
